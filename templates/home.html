@@ -1,0 +1,96 @@
+{% extends './layout.html' %}
+
+{% block content %}
+
+{% load static %}
+<head>
+    <!-- Static Files -->
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/skeleton.css' %}">
+</head>
+
+<div class="hero" id="hero">
+  <div class="container">
+      <div class="row">
+          <div class="six columns">
+              <div class="contenido-hero">
+                  <h2>RESERVA Y DISFRUTA</h2>
+                  <p>Los mejores lugares turistico del Ecuador esperan a que visites</p>
+                  <form action="#" id="busqueda" method="" class="formulario">
+                      <input class="u-full-width" type="text" placeholder="¿Que te gustaria visitar?"
+                          id="buscador">
+                      <input type="" name="" id="submit-buscador" class="submit-buscador">
+                  </form>
+              </div>
+
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<div class="container col-lg-8 col-md-12 row">
+    <h1 class="text-center my-4">Rutas turistica por Travel Tour</h1>
+    {% for post in posts %}
+        <div class="card shadow border mb-3 p-4 four columns" style="width: 40rem;">
+            <a href={{ post.get_absolute_url }}>
+                <img src={{post.image.url}} class="card-img-top"/>
+            </a> 
+            <div class="border-0 p-0 d-flex">
+                <div class="col-8">
+                  <a href={{ post.author.get_absolute_url }}>
+                    <h4 class="m-0"> {{post.author}}</h4>
+                  </a>
+                  <p class="mb-1">
+                    {{post.description}}
+                  </p>
+                </div>
+                {% for producto in productos %}
+                    <div class="col-6">
+                         <h5 class="card-title">hola{{producto.nombre}}</h5>
+                          <p class="card-text">{{producto.categoria}}</p>
+                          <p class="card-text">{{producto.precio}}</p>
+                          <a href="{% url 'Add' producto.id %}" class="btn btn-primary">Agregar al carrito</a>
+                    </div>
+                {% endfor %}
+                
+                <div id="{{ post.identifier }}"class='d-flex justify-content-end col-4 p-0'>
+                  <a
+                    type="button"
+                    data-post="{{post.identifier}}"
+                    class="fs-5 text-reset like-button"
+                    >
+                    {% if user in post.likes.all %}
+                    <i class="fas fa-heart text-danger"></i>
+                    {% else%}
+                    <i class="far fa-heart"></i>
+                    {% endif %}
+                  </a>
+                  <p class="fw-bold fs-5 px-1">{{post.likes.all | length}}</p>
+                  <p class="fw-bold fs-5 col-auto">Me gusta</p>
+                </div>
+          
+              </div>
+          
+              <hr class="mt-0"/>
+
+              <div class="mb-1 comment-div border-0">
+                {% for comment in post.get_comments %}
+                <p class="mb-0">
+                  <strong>{{ comment.user }}</strong> {{ comment.body }}
+                </p>
+                {% endfor %}
+              </div>
+
+            <div class="card-footer">
+                <p class="card-text">
+                    <small class="text-muted">{{post.published}}</small>
+                </p>
+            </div>
+
+        </div>
+    {% endfor %}
+
+</div>
+
+{% endblock  %}

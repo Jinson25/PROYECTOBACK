@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Travel Tour</title>
+        <!-- Font Awesome -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"rel="stylesheet"/>
+        <!-- MDB -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.4.0/mdb.min.css"rel="stylesheet"/>
+        <!-- Static Files -->
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/index.css' %}">
+        <!-- JQuery -->
+        <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+    </head>
+    <body>
+
+
+      <header class="sticky">
+        {% include "user/login.html" %}
+        <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light sticky">
+
+    <div class="container-fluid">
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-mdb-toggle="collapse"
+        data-mdb-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- LOGO -->
+        <a class="navbar-brand mt-2 mt-lg-0" href="{% url 'PROYECTO:home' %}">
+          <img
+            src="../static/img/logo.png"
+            height="40"
+            width="50"
+            alt="Travel Logo"
+            loading="lazy"
+          />
+        </a>
+        <!-- Links de la pagina -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'PROYECTO:home' %}">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Rutas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Guias</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- LOGIN -->
+      <div class="d-flex align-items-center me-3">
+        {% if user.is_authenticated %}
+        <a class="text-reset me-3" href="">
+          <i class="fas fa-shopping-cart"></i>
+        </a>
+        <!-- Notificacion adorno -->
+        <div class="dropdown">
+          <a class="text-reset me-3 dropdown-toggle hidden-arrow" href="#"id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown">
+            <i class="fas fa-bell"></i>
+            <span class="badge rounded-pill badge-notification bg-danger">1</span>
+          </a>
+        </div>
+        
+        <a href={% url 'users:profile' %}>
+          <img src={{ user.profile_pic.url }} class="rounded-circle" height="30" width='30' alt="" loading="lazy" />
+        </a>
+        {% else %}
+        <button type="button" class="btn btn-primary" data-mdb-toggle='modal' data-mdb-target='#loginModal'>
+          Iniciar Sesión
+        </button>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+</header>
+
+  <div id="content"> {% block content %} {% endblock  %}  </div>
+
+
+  <footer class="bg-dark text-center text-white">
+    <div class="container p-1 pb-0">
+      <section class="mb-1">
+        <!-- Facebook -->
+        <a class="btn btn-outline-light btn-floating m-1" href="https://www.facebook.com/AJinson12" role="button"
+          ><i class="fab fa-facebook-f"></i
+        ></a>
+
+        <!-- Instagram -->
+        <a class="btn btn-outline-light btn-floating m-1" href="https://www.instagram.com/jinzon.st/" role="button"
+          ><i class="fab fa-instagram"></i
+        ></a>
+  
+        <!-- Github -->
+        <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/Jinson25/PROYECTOBACK" role="button"
+          ><i class="fab fa-github"></i
+        ></a>
+      </section>
+    </div>
+    <div class="text-center p-2" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2022 Copyright:
+      <a class="text-white" href="#">TravelTour.com</a>
+    </div>
+  </footer>
+
+        <!-- MDB -->
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.4.0/mdb.min.js"></script>
+      <script>
+        $(document).on('click', '.like-button', function (e) {
+          e.preventDefault();
+          var post_id = $(this).data('post');
+          $.ajax({
+            type: 'GET',
+            url: '{% url "PROYECTO:like" %}',
+            data: {
+              post_id: post_id
+            },
+            success: function (response) {
+              $('#' + post_id).load(location.href + ' #' + post_id)
+            },
+            error: function (xhr, errmsg, err) {}
+          });
+        })
+        $(document).on('click', '.comment-button', function (e) {
+          e.preventDefault();
+          var post_id = $(this).data('post');
+          var comment = $('#comment' + post_id).prop('value')
+          if (comment != '') {
+            $.ajax({
+              type: 'GET',
+              url: '{% url "PROYECTO:comment" %}',
+              data: {
+                post_id: post_id,
+                comment: comment
+              },
+              success: function (response) {
+                $(".comment-div").load(location.href + " .comment-div")
+                $("#comment_form")[0].reset()
+              },
+              error: function (xhr, errmsg, err) {}
+            });
+          }
+        })
+      </script>
+    </body>
+</html>
