@@ -27,7 +27,27 @@
       </div>
   </div>
 </div>
-
+<div class="container container-web-page">
+  <h1 class="text-center text-uppercase poppins-regular font-weight-bold">Nuestros servicios</h1>
+  <br>
+  <div class="row">
+      <div class="col-12 col-sm-6 col-md-4">
+          <p class="text-center"><i class="fas fa-shipping-fast fa-5x"></i></p>
+          <h5 class="text-center text-uppercase poppins-regular font-weight-bold">Las mejores rutas</h5>
+          <p class="text-center">¿Listo/a para descubrir los mejores itinerarios en Ecuador para practicar senderismo, ciclismo de montaña, mochilear y otras actividades al aire libre?</p>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4">
+          <p class="text-center"><i class="fas fa-utensils fa-5x"></i></p>
+          <h5 class="text-center text-uppercase poppins-regular font-weight-bold">Guias experimentados</h5>
+          <p class="text-center">Excursiones ecologicas con guias experimentados e informativos</p>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4">
+          <p class="text-center"><i class="fas fa-store-alt fa-5x"></i></p>
+          <h5 class="text-center text-uppercase poppins-regular font-weight-bold">Calidad a lo mejor</h5>
+          <p class="text-center">Visita lugares sin miedo, con gran calidad de guias ¿Que esperas aventarte a esta gran aventura?</p>
+      </div>
+  </div>
+</div>
 
 <div class="container col-lg-8 col-md-12 row">
     <h1 class="text-center my-4">Rutas turistica por Travel Tour</h1>
@@ -39,20 +59,12 @@
             <div class="border-0 p-0 d-flex">
                 <div class="col-8">
                   <a href={{ post.author.get_absolute_url }}>
-                    <h4 class="m-0"> {{post.author}}</h4>
+                    <h4 class="m-0 justify-center"> {{post.author}}</h4>
                   </a>
                   <p class="mb-1">
                     {{post.description}}
                   </p>
                 </div>
-                {% for producto in productos %}
-                    <div class="col-6">
-                         <h5 class="card-title">hola{{producto.nombre}}</h5>
-                          <p class="card-text">{{producto.categoria}}</p>
-                          <p class="card-text">{{producto.precio}}</p>
-                          <a href="{% url 'Add' producto.id %}" class="btn btn-primary">Agregar al carrito</a>
-                    </div>
-                {% endfor %}
                 
                 <div id="{{ post.identifier }}"class='d-flex justify-content-end col-4 p-0'>
                   <a
@@ -87,10 +99,11 @@
                     <small class="text-muted">{{post.published}}</small>
                 </p>
             </div>
-
         </div>
+        
     {% endfor %}
 
+    <a href="crear" class="btn btn-primary mt-5">Crear Nuevo</a>
 </div>
 
 {% endblock  %}

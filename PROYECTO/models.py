@@ -52,3 +52,12 @@ class Producto(models.Model):
     
     def __str__(self):
         return f'{self.nombre} -> {self.precio} '
+    
+class Pago(models.Model):
+    metodo = models.CharField(max_length= 100)
+    valor = models.CharField(max_length= 50)
+    guia = models.CharField(max_length= 100)
+    fecha = models.CharField(max_length= 80)
+    
+    def __str__(self):
+        return self.name

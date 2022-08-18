@@ -1,0 +1,16 @@
+{% extends './layout.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/div.css' %}">
+    
+<div class="container mt-5">
+
+    <form method="POST" class="form-group">
+        {% csrf_token %}
+        {{ post_form.as_p }}
+
+        <button class="btn btn-success">Crear</button>
+    </form>
+
+</div>
+{% endblock  %}

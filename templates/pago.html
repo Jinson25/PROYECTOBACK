@@ -1,0 +1,38 @@
+{% extends './layout.html' %}
+{% block content %}
+{% load static %}
+<div class="container">
+
+    <a href="{% url 'PROYECTO:crearpago' %}" class="btn btn-outline-dark mt-5">Crear Pago</a>
+
+    <table class="table table-bordered table-info mt-5 text-center">
+    <thead>
+        <tr>
+        <th>Metodo de pago</th>
+        <th>Costo</th>
+        <th>Guia</th>
+        <th>Fecha</th>
+        <th>¿Cambios?</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pago in pagos %}
+            <tr>
+                <th>{{ pago.metodo }}</th>
+                <td>{{ pago.valor }}</td>
+                <td>{{ pago.guia }}</td>
+                <td>{{ pago.fecha }}</td>
+                <td>
+                    <a href=" {% url 'PROYECTO:editarpago' pago.id %}" class="btn btn-success">Editar</a>
+                    <a href=" {% url 'PROYECTO:eliminarpago' pago.id %} " class="btn btn-primary">Eliminar pago</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    <br>
+    <br>
+
+
+</div>
+{% endblock  %}
